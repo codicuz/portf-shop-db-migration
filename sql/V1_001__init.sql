@@ -94,7 +94,7 @@ CREATE TABLE storehouses (
 CREATE TABLE storehouses_products (
     id SERIAL PRIMARY KEY,
     storehouse_id INT UNSIGNED,
-    proudct_id INT UNSIGNED,
+    product_id INT UNSIGNED,
     value INT UNSIGNED COMMENT 'Запас товарной позиции на складе',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
