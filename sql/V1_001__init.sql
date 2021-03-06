@@ -36,11 +36,13 @@ CREATE TABLE products (
     name VARCHAR(255) COMMENT 'Название',
     description TEXT COMMENT 'Описание',
     price DECIMAL(11, 2) COMMENT 'Цена',
-    catalog_id INT UNSIGNED,
+    catalog_id BIGINT UNSIGNED DEFAULT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     KEY index_of_catalog_id(catalog_id) -- Содание индекса inline
 ) COMMENT = 'Товарные позиции';
+
+-- ALTER TABLE products ADD CONSTRAINT fk_catalog_id FOREIGN KEY (catalog_id) REFERENCES catalogs (id) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- CREATE INDEX index_of_catalog_id ON products (catalog_id); -- Создание индекса уже в существующей таблице
 -- CREATE INDEX index_of_catalog_id USING BTREE ON products (catalog_id); -- Создание BTREE индекса уже в существующей таблице
@@ -99,3 +101,15 @@ CREATE TABLE storehouses_products (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) COMMENT = 'Запасы на складе';
+
+CREATE TABLE accounts (
+    id SERIAL PRIMARY KEY,
+    user_id INT,
+    total DECIMAL(11,2) COMMENT 'Счет',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) COMMENT = 'Счета пользователей и интернет магазина';
+
+CREATE OR REPLACE VIEW cat AS SELECT * FROM catalogs ORDER BY name ASC;
+
+CREATE OR REPLACE VIEW namecat (id, name, total) AS SELECT ID, NAME, LENGTH(name) FROM catalogs;
